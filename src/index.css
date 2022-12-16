@@ -1,0 +1,183 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif!important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.uppy-Dashboard-poweredBy {
+  display: none!important;
+}
+
+.uppy-Dashboard-inner {
+  border-bottom: none!important;
+  border-bottom-left-radius: 0!important;
+  border-bottom-right-radius: 0!important;
+}
+
+.uppy-Dashboard-AddFiles {
+  margin-bottom: 0!important;
+  border-radius: 5px!important;
+}
+
+.uppy-Dashboard-Item-previewInnerWrap {
+  background-color: #fff!important;
+}
+
+.uppy-Dashboard-Item-previewImg {
+  object-fit: contain!important;
+}
+
+.uppy-Dashboard-AddFiles-list {
+  max-width: 400px!important;
+}
+
+.ant-image-preview-mask, .ant-image-preview-operations, .ant-image-preview-wrap {
+  z-index: 9999!important;
+}
+
+.uppy-Dashboard-FileCard-preview {
+  background-color: #fff!important;
+}
+
+.uppy-DashboardContent-panel {
+  z-index: 100!important;
+}
+
+.image-gallery.uppy-Root {
+  border: 1px solid #eaeaea!important;
+  border-top: none!important;
+  width: 750px!important;
+  background-color: #fafafa!important;
+  border-bottom-left-radius: 5px!important;
+  border-bottom-right-radius: 5px!important;
+}
+
+.image-gallery .uppy-Dashboard {
+  border: 1px dashed #dfdfdf!important;
+  margin: 7px!important;
+  padding-top: 30px;
+  border-radius: 5px;
+}
+
+.image-gallery #gallery-footer {
+  padding-top: 20px!important;
+}
+
+.image-gallery #gallery-footer button {
+  margin: 10px;
+}
+
+
+.image-gallery .uppy-Dashboard-Item-action--remove {
+  right: -8px;
+}
+
+.image-gallery .ant-image {
+  height: 100%;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: rgb(24, 144, 255);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  height: 10px;
+  background-color: rgb(24, 144, 255);
+}
+
+.ant-image {
+  height: 150px!important;
+  background-color: #fff!important;
+  display: flex!important;
+  border: 1px solid #f0f0f0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.ant-modal {
+  width: 1000px;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-modal-body {
+  min-width: 753px; 
+  min-height: 496px;
+}
+
+.ant-modal-close {
+  display: none!important;
+}
+
+.ant-btn, .ant-card, .ant-card-actions {
+  border-radius: 0!important;
+}
+
+.ant-card-body {
+  padding: 15px !important;
+}
+
+.tui-image-editor-header-logo, .tui-image-editor-header-buttons, .tie-btn-delete, .tie-btn-deleteAll/*, .FIE_topbar-save-wrapper*/ {
+  display: none!important;
+}
+
+.FIE_tools-bar {
+  overflow-x: visible!important;
+}
+
+.FIE_canvas-container {
+  width: 650px!important;
+  height: 325px;
+}
+
+.FIE_canvas-container > .FIE_canvas-node {
+  height: 325px;
+}
+
+.FIE_editor-content {
+  max-width: 650px!important;
+}
+
+.FIE_topbar-save-button, .SfxModalActions-root .SfxButton-root:last-child {
+  background-color: rgb(24, 144, 255)!important;
+}
+
+.SfxModalTitle-Icon path {
+  fill: rgb(24, 144, 255)!important;
+}
+
+.FIE_tabs .FIE_tab:first-child .FIE_tab-label {
+  visibility: hidden;
+  display: block;
+}
+
+.FIE_tabs .FIE_tab:first-child .FIE_tab-label::after {
+  display: block;
+  visibility: visible;
+  content: 'Crop';
+  margin-top: -12px;
+}
