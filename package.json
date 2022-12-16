@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/AmirhosseinSrv/react-full-gallery.git"
   },
+  "homepage": "https://github.com/AmirhosseinSrv/react-full-gallery",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
