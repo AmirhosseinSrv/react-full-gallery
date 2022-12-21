@@ -129,6 +129,8 @@ const ImageGallery: React.FC<ImageGalleryInterface> = (props) => {
         setImagesToUpload={setImagesToUpload} 
         loading={props.loading} 
         mode={imagesToUpload.length ? 'Upload' : 'Update'} 
+        allowMultipleEdit={props.allowMultipleEdit}
+        allowMultipleDelete={props.allowMultipleDelete}
         handleRemoveImages={props.handleRemoveImages} 
         handleUploadImages={props.handleUploadImages} 
         handleUpdateImages={props.handleUpdateImages} 

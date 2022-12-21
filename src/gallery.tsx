@@ -3,24 +3,30 @@ import { Button, Skeleton } from 'antd'
 import GalleryItem from './gallery-item'
 import { GalleryInterface, ImageInterface } from './interfaces';
 
-const Gallery: React.FC<GalleryInterface> = ({ images, setImagesToUpload, mode, loading, handleUpdateImages, handleUploadImages, handleRemoveImages }) => {
+const Gallery: React.FC<GalleryInterface> = (props) => {
     const [newImages, setNewImages] = useState<ImageInterface[]>([]);
     const [saveLoading, setSaveLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        setNewImages([...images]);
-    }, [images]);
+        setNewImages([...props.images]);
+    }, [props.images]);
 
-    const handleRemoveImage = (id: string) => {
+    const handleRemoveImage = async (id: string) => {
+        setSaveLoading(true);
         const images = [...newImages];
         const index = images.findIndex((image) => image.id === id);
         images.splice(index, 1);
-        setNewImages(images);
+        if(!props.allowMultipleDelete) {
+            setSaveLoading(true);
+            await handleRemove(images);
+            setSaveLoading(false);
+        }
     };
 
-    const handleRemove = async () => {
-        const removedImages = images.filter((image) => !newImages.find(newImage => newImage.id === image.id));
-        await handleRemoveImages(removedImages, newImages);
+    const handleRemove = async (incomingNewImages: ImageInterface[] | null = null) => {
+        const localNewImages = incomingNewImages ? incomingNewImages : newImages;
+        const removedImages = props.images.filter((image) => !localNewImages.find(newImage => newImage.id === image.id));
+        await props.handleRemoveImages(removedImages, localNewImages);
     };
 
     const handleSaveImage = async (id: string, imageBase64: string, name: string, extension: string) => {
@@ -28,11 +34,17 @@ const Gallery: React.FC<GalleryInterface> = ({ images, setImagesToUpload, mode, 
         const modifiedIndex = newModifiedImages.findIndex((image) => image.id === id);
         newModifiedImages[modifiedIndex] = {...newModifiedImages[modifiedIndex], originalUrl: imageBase64, previewUrl: imageBase64, name: `${name}.${extension}`, modified: true};
         setNewImages(newModifiedImages); 
+        if(!props.allowMultipleEdit) {
+            setSaveLoading(true);
+            await handleUpdate(newModifiedImages);
+            setSaveLoading(false);
+        }
     }
 
-    const handleUpdate = async () => {
-        const modifiedImages = newImages.filter((image) => image.modified === true);
-        await handleUpdateImages(modifiedImages);
+    const handleUpdate = async (incomingNewImages: ImageInterface[] | null = null) => {
+        const localNewImages = incomingNewImages ? incomingNewImages : newImages;
+        const modifiedImages = localNewImages.filter((image) => image.modified === true);
+        await props.handleUpdateImages(modifiedImages);
     };
 
     const handleSaveChanges = async () => {
@@ -44,8 +56,8 @@ const Gallery: React.FC<GalleryInterface> = ({ images, setImagesToUpload, mode, 
 
     const handleUpload = async () => {
         setSaveLoading(true);
-        await handleUploadImages(newImages);
-        setImagesToUpload([]);
+        await props.handleUploadImages(newImages);
+        props.setImagesToUpload([]);
         setSaveLoading(false);
     };
 
@@ -57,32 +69,37 @@ const Gallery: React.FC<GalleryInterface> = ({ images, setImagesToUpload, mode, 
                         <div role="presentation" style={{ position: 'absolute', top: 0, left: 0, width: '100%', overflow: 'visible' }}>
                             <div className="uppy-Dashboard-filesInner" style={{ display: 'flex', flexWrap:'wrap' }} role="presentation">
                                 {
-                                    loading ?
+                                    props.loading ?
                                         new Array(5).fill(0).map((_, index) => (
                                             <Skeleton.Button active key={index} style={{ width: 170, height: 277, margin: '0 5px 15px 5px' }} />
                                         ))
                                     :
                                         newImages.map((image) => (
-                                            <GalleryItem key={image.id} image={image} mode={mode} handleRemoveImage={handleRemoveImage} handleSaveImage={handleSaveImage} />
+                                            <GalleryItem key={image.id} image={image} mode={props.mode} handleRemoveImage={handleRemoveImage} handleSaveImage={handleSaveImage} />
                                         ))
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
-                <div style={{ width: '100%', textAlign: 'right' }} id="gallery-footer">
-                    {
-                        mode === 'Update' ?
-                            <Button style={{ borderRadius: 0, marginTop: 10 }} type="primary" onClick={handleSaveChanges} loading={saveLoading} disabled={saveLoading || JSON.stringify(images) === JSON.stringify(newImages)}>Save</Button>
-                        : mode === 'Upload' ?
-                            <Fragment>
-                                <Button style={{ borderRadius: 0, marginTop: 10 }} onClick={() => setImagesToUpload([])} disabled={saveLoading}>Cancel</Button>
-                                <Button style={{ borderRadius: 0, marginTop: 10 }} type="primary" onClick={handleUpload} loading={saveLoading} disabled={saveLoading}>Upload</Button>
-                            </Fragment>
-                        :
-                            null
-                    }
-                </div>
+                {
+                    !props.allowMultipleDelete && !props.allowMultipleEdit && props.mode !== 'Upload' ?
+                        null
+                    :
+                        <div style={{ width: '100%', textAlign: 'right' }} id="gallery-footer">
+                            {
+                                props.mode === 'Update' ?
+                                    <Button style={{ borderRadius: 0, marginTop: 10 }} type="primary" onClick={handleSaveChanges} loading={saveLoading} disabled={saveLoading || JSON.stringify(props.images) === JSON.stringify(newImages)}>Save</Button>
+                                : props.mode === 'Upload' ?
+                                    <Fragment>
+                                        <Button style={{ borderRadius: 0, marginTop: 10 }} onClick={() => props.setImagesToUpload([])} disabled={saveLoading}>Cancel</Button>
+                                        <Button style={{ borderRadius: 0, marginTop: 10 }} type="primary" onClick={handleUpload} loading={saveLoading} disabled={saveLoading}>Upload</Button>
+                                    </Fragment>
+                                :
+                                    null
+                            }
+                        </div>
+                }
             </div>
         </div>
     )

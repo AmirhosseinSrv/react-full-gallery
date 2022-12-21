@@ -33,6 +33,8 @@ import ImageGallery from 'react-full-gallery';
     note={'Images only, up to 2 MB'}
     remoteSources={['Dropbox', 'Facebook', 'GoogleDrive','Instagram', 'OneDrive', 'Unsplash', 'Url']}
     loading={loading}
+    allowMultipleEdit={allowMultipleEdit}
+    allowMultipleDelete={allowMultipleDelete}
     handleUploadImages={handleUploadImages} 
     handleUpdateImages={handleUpdateImages}
     handleRemoveImages={handleRemoveImages} 
@@ -95,6 +97,10 @@ interface ImageGalleryInterface {
     allowedFileTypes?: string[];
     // Loading state.
     loading?: boolean;
+    // Allow multiple edit.
+    allowMultipleEdit?: boolean;
+    // Allow multiple delete.
+    allowMultipleDelete?: boolean;
     // Your custom logic before adding an image.
     onBeforeFileAdded?: (currentImage: UppyFileType, images: FilesInterface) => UppyFileType | undefined | boolean;
     // Your custom logic before uploading images.

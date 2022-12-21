@@ -27,6 +27,8 @@ export interface ImageGalleryInterface {
   maxFileSize?: number;
   allowedFileTypes?: string[];
   loading?: boolean;
+  allowMultipleEdit?: boolean;
+  allowMultipleDelete?: boolean;
   onBeforeFileAdded?: (currentImage: UppyFileType, images: FilesInterface) => UppyFileType | undefined | boolean;
   onBeforeUpload?: (images: FilesInterface) => FilesInterface | boolean;
   handleUploadImages: (newImages: ImageInterface[]) => Promise<void>;
@@ -39,6 +41,8 @@ export interface GalleryInterface {
   setImagesToUpload: Dispatch<SetStateAction<ImageInterface[]>>;
   mode: 'Update' | 'Upload';
   loading?: boolean;
+  allowMultipleEdit?: boolean;
+  allowMultipleDelete?: boolean;
   handleUploadImages: (newImages: ImageInterface[]) => Promise<void>;
   handleUpdateImages: (modifiedImages: ImageInterface[]) => Promise<void>;
   handleRemoveImages: (removedImages: ImageInterface[], newImages: ImageInterface[]) => Promise<void>;
