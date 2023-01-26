@@ -6,6 +6,7 @@ import { GalleryInterface, ImageInterface } from './interfaces';
 const Gallery: React.FC<GalleryInterface> = (props) => {
     const [newImages, setNewImages] = useState<ImageInterface[]>([]);
     const [saveLoading, setSaveLoading] = useState<boolean>(false);
+    const [uploadLoading, setUploadLoading] = useState<boolean>(false);
 
     useEffect(() => {
         setNewImages([...props.images]);
@@ -58,17 +59,17 @@ const Gallery: React.FC<GalleryInterface> = (props) => {
     };
 
     const handleUpload = async () => {
-        setSaveLoading(true);
+        setUploadLoading(true);
         await props.handleUploadImages(newImages);
         props.setImagesToUpload([]);
-        setSaveLoading(false);
+        setUploadLoading(false);
     };
 
     return (
         <div className='uppy-Root image-gallery' style={{ width: 750 }}>
             <div className='uppy-Dashboard uppy-Dashboard--animateOpenClose uppy-size--md uppy-size--lg uppy-size--height-md uppy-Dashboard--isInnerWrapVisible'>
                 <div className="uppy-Dashboard-files" role="list">
-                    <div role="presentation" style={{ position: 'relative', width: '100%', minHeight: '100%', height: 350 }}>
+                    <div role="presentation" style={{ position: 'relative', width: '100%', height: 350 }}>
                         <div role="presentation" style={{ position: 'absolute', top: 0, left: 0, width: '100%', overflow: 'visible' }}>
                             <div className="uppy-Dashboard-filesInner" style={{ display: 'flex', flexWrap:'wrap' }} role="presentation">
                                 {
@@ -95,8 +96,8 @@ const Gallery: React.FC<GalleryInterface> = (props) => {
                                     <Button style={{ borderRadius: 0, marginTop: 10 }} type="primary" onClick={handleSaveChanges} loading={saveLoading} disabled={saveLoading || JSON.stringify(props.images) === JSON.stringify(newImages)}>Save</Button>
                                 : props.mode === 'Upload' ?
                                     <Fragment>
-                                        <Button style={{ borderRadius: 0, marginTop: 10 }} onClick={() => props.setImagesToUpload([])} disabled={saveLoading}>Cancel</Button>
-                                        <Button style={{ borderRadius: 0, marginTop: 10 }} type="primary" onClick={handleUpload} loading={saveLoading} disabled={saveLoading}>Upload</Button>
+                                        <Button style={{ borderRadius: 0, marginTop: 10 }} onClick={() => props.setImagesToUpload([])} disabled={uploadLoading}>Cancel</Button>
+                                        <Button style={{ borderRadius: 0, marginTop: 10 }} type="primary" onClick={handleUpload} loading={uploadLoading} disabled={uploadLoading}>Upload</Button>
                                     </Fragment>
                                 :
                                     null

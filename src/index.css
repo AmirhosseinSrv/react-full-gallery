@@ -181,3 +181,11 @@ code {
   content: 'Crop';
   margin-top: -12px;
 }
+
+#upload-form {
+  display: none!important;
+}
+
+.uppy-DashboardTab-btn {
+  height: auto!important;
+}
