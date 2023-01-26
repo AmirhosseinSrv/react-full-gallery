@@ -60,12 +60,14 @@ const ImageGallery: React.FC<ImageGalleryInterface> = (props) => {
             }
             if(shouldFileBeAdded) {
               if(currentFile.preview) {
+                const fullWidthImageUrl = new URL(currentFile.preview);
+                fullWidthImageUrl.searchParams.delete('w');
                 setImagesToUpload([...imagesToUploadRef.current, {
-                  originalUrl: currentFile.preview,
+                  originalUrl: fullWidthImageUrl.toString(),
                   name: currentFile.name,
                   id: uuidv4()
                 }]);
-              } else if(currentFile.data) {
+              } else if(currentFile.data?.size) {
                 blobToBase64(currentFile.data).then((imageBase64: any) => {
                   setImagesToUpload([...imagesToUploadRef.current, {
                     originalUrl: imageBase64,
@@ -73,6 +75,13 @@ const ImageGallery: React.FC<ImageGalleryInterface> = (props) => {
                     id: uuidv4()
                   }]);
                 });
+              } else if(currentFile.remote?.body?.url) {
+                const imageUrl = currentFile.remote?.body?.url.toString();
+                setImagesToUpload([...imagesToUploadRef.current, {
+                  originalUrl: imageUrl,
+                  name: currentFile.name,
+                  id: uuidv4()
+                }]);
               }
             }
             return false;

@@ -16,7 +16,10 @@ const Gallery: React.FC<GalleryInterface> = (props) => {
         const images = [...newImages];
         const index = images.findIndex((image) => image.id === id);
         images.splice(index, 1);
-        if(!props.allowMultipleDelete) {
+        setNewImages(images);
+        if(props.mode === 'Upload') {
+            props.setImagesToUpload(images);
+        } else if(!props.allowMultipleDelete) {
             setSaveLoading(true);
             await handleRemove(images);
             setSaveLoading(false);
