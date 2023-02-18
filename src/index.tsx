@@ -67,7 +67,7 @@ const ImageGallery: React.FC<ImageGalleryInterface> = (props) => {
                   name: currentFile.name,
                   id: uuidv4()
                 }]);
-              } else if(currentFile.data?.size) {
+              } else if(currentFile.data?.size && Object.keys(currentFile.data).length > 1) {
                 blobToBase64(currentFile.data).then((imageBase64: any) => {
                   setImagesToUpload([...imagesToUploadRef.current, {
                     originalUrl: imageBase64,
